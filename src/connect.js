@@ -108,7 +108,7 @@ function insertRenderer(options, name, propKeys, eventKeys) {
       return h(name, {
         props: pick(this, propKeys),
         on: pick(this, eventKeys)
-      })
+      }, this.$slots.default)
     }
   } else {
     const props = propKeys.map(bindProp)
