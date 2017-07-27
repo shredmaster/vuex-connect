@@ -267,9 +267,17 @@ var createConnect = function createConnect(transform) {
 function insertRenderer(options, name, propKeys, eventKeys) {
   if (VERSION >= 2) {
     options.render = function (h) {
+      var props = pick(this, propKeys);
+      if (!options.inheritAttrs) {
+        var $attrs = this.$attrs;
+        if ($attrs) {
+          props = merge(props, $attrs);
+        }
+      }
+      var on = pick(this, eventKeys);
       return h(name, {
-        props: pick(this, propKeys),
-        on: pick(this, eventKeys)
+        props: props,
+        on: on
       }, this.$slots.default);
     };
   } else {

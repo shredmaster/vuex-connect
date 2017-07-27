@@ -109,9 +109,17 @@ export const createConnect = transform => (options = {}) => {
 function insertRenderer(options, name, propKeys, eventKeys) {
   if (VERSION >= 2) {
     options.render = function(h) {
-      return h(name, {
-        props: pick(this, propKeys),
-        on: pick(this, eventKeys)
+        let props = pick(this, propKeys)
+      if(!options.inheritAttrs) {
+          let $attrs = this.$attrs
+          if($attrs) {
+            props = merge(props, $attrs)
+          }
+      }
+      let on = pick(this, eventKeys)
+        return h(name, {
+        props,
+        on
       }, this.$slots.default)
     }
   } else {
