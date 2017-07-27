@@ -240,10 +240,11 @@ var createConnect = function createConnect(transform) {
       var eventKeys = keys(actionsToEvents, mutationsToEvents, methodsToEvents);
 
       var containerProps = omit(getOptions(Component).props || {}, propKeys);
-
+      var inheritAttrs = getOptions(Component).inheritAttrs || true;
       var options = {
         name: 'connect-' + name,
         props: containerProps,
+        inheritAttrs: inheritAttrs,
         components: defineProperty({}, name, Component),
         computed: merge(vuex.mapState(stateToProps), vuex.mapGetters(gettersToProps)),
         methods: merge(vuex.mapActions(merge(actionsToProps, actionsToEvents)), vuex.mapMutations(merge(mutationsToProps, mutationsToEvents)), mapValues(merge(methodsToProps, methodsToEvents), bindStore))

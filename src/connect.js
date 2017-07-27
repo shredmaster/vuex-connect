@@ -73,10 +73,11 @@ export const createConnect = transform => (options = {}) => {
     )
 
     const containerProps = omit(getOptions(Component).props || {}, propKeys)
-
+    const inheritAttrs =  getOptions(Component).inheritAttrs || true
     const options = {
       name: `connect-${name}`,
       props: containerProps,
+      inheritAttrs,
       components: {
         [name]: Component
       },
