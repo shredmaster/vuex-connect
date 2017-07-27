@@ -239,7 +239,10 @@ var createConnect = function createConnect(transform) {
       var eventKeys = keys(actionsToEvents, mutationsToEvents, methodsToEvents);
 
       var containerProps = omit(getOptions(Component).props || {}, propKeys);
-      var inheritAttrs = getOptions(Component).inheritAttrs || true;
+      var inheritAttrs = true;
+      if (getOptions(Component).hasOwnProperty('inheritAttrs')) {
+        inheritAttrs = getOptions(Component).inheritAttrs;
+      }
       var options = {
         name: 'connect-' + name,
         props: containerProps,
